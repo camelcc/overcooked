@@ -82,7 +82,7 @@ interface ApiInterface {
 }
 
 class AuthenticationInterceptor: Interceptor {
-    private val apiKey = "<API-KEY>"
+    private val apiKey = APIKEY
 
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val original = chain.request()
@@ -128,5 +128,10 @@ class Repository(appContext: Context) {
     @WorkerThread
     suspend fun searchPhotos(search: String): Response<Searched> {
         return apiClient.search(query = search)
+    }
+
+    @WorkerThread
+    suspend fun updatePhoto(photo: PhotoEntity) {
+        db.photoDao().update(photo = photo)
     }
 }

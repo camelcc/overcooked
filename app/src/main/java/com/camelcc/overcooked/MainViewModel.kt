@@ -1,7 +1,6 @@
 package com.camelcc.overcooked
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -82,6 +81,10 @@ class MainViewModel(
         }
     }
 
+    fun photoBy(id: Long): Photo? {
+        return displayedPhotos.firstOrNull { it.id == id }
+    }
+
     fun search(search: String) {
         viewModelScope.launch {
             withContext(dispatchers.compute) {
@@ -120,6 +123,10 @@ class MainViewModel(
         }
         displayedPhotos = newPhotos
         _photosFlow.update { newPhotos }
+        viewModelScope.launch(dispatchers.io) {
+            val newPhoto = photo.copy(enabled = !photo.enabled)
+            repository.updatePhoto(newPhoto.toPhotoEntity())
+        }
     }
 
     fun updateVisiblePhotos(photos: List<Photo>) {

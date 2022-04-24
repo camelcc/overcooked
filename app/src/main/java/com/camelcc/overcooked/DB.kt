@@ -20,9 +20,12 @@ interface PhotoDAO {
 
     @Insert(onConflict = IGNORE)
     fun insertAll(vararg photos: PhotoEntity)
+
+    @Update(entity = PhotoEntity::class)
+    fun update(photo: PhotoEntity)
 }
 
-@Database(entities = [PhotoEntity::class], version = 2)
+@Database(entities = [PhotoEntity::class], version = 2, exportSchema = false)
 abstract class DB: RoomDatabase() {
     abstract fun photoDao(): PhotoDAO
 }

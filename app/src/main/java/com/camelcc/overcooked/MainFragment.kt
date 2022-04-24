@@ -1,7 +1,6 @@
 package com.camelcc.overcooked
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,7 +76,6 @@ class MainFragment : Fragment() {
     private fun updateVisible() {
         val first = layoutManager.findFirstVisibleItemPosition()
         val last = layoutManager.findLastVisibleItemPosition()
-        Log.e("TTT", "upate visible $first, $last")
         if (first >= 0 && last >= 0 && first <= last) {
             viewModel.updateVisiblePhotos(adapter.visiblePhotos(first, last))
         }
